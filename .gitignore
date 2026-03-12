@@ -1,0 +1,59 @@
+# Виртуальное окружение
+venv/
+env/
+.env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# База данных
+*.sqlite3
+*.db
+
+# Собранные статические файлы и медиа
+/staticfiles/
+/static_root/
+/media/
+/uploads/
+
+# Локальные настройки и секреты
+local_settings.py
+*.local.py
+.env
+*.env
+
+# Кеш Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Файлы IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Логи
+*.log
+*.pot
+
+# Временные файлы
+*.bak
+*.tmp
+
+# Дистрибутивы / сборки
+/dist/
+/build/
+/*.egg-info/
+
+# Файлы тестового покрытия
+.coverage
+htmlcov/
+.tox/
+
+*.iml

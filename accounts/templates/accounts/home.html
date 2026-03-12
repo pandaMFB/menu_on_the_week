@@ -1,0 +1,23 @@
+{% extends "base_auth.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="home-page">
+  <div class="form-card">
+    <h1 class="title">Добро пожаловать!</h1>
+    <p class="subtitle">
+      Планируйте питание и следите за здоровьем вместе с нашим сервисом.
+    </p>
+
+    <div class="cta-buttons">
+      <a href="{% url 'accounts:login' %}" class="btn btn-login">Войти в аккаунт</a>
+      <a href="{% url 'accounts:register' %}" class="btn btn-register">Зарегистрироваться</a>
+    </div>
+  </div>  <!-- /form-card -->
+</div>  <!-- /home-page -->
+{% endblock %}

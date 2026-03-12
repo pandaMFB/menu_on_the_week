@@ -1,0 +1,143 @@
+{% extends "base_register.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="register-form-container">
+    <h2>Регистрация</h2>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'danger' }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" id="register-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">
+                {{ form.username.label }}
+                <div class="tooltip-wrapper">
+                    <span class="tooltip-icon">!</span>
+                    <span class="tooltip-text">
+                        - Начинаться с буквы (a‑z, A‑Z)<br>
+                        - 3–16 символов<br>
+                        - Разрешены: буквы, цифры, @$_!#<br>
+                        - Хотя бы одна буква<br>
+                        - Без пробелов и табуляции<br>
+                        - Не «none» или «null»
+                    </span>
+                </div>
+            </label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <div class="text-danger small">
+                {% for error in form.username.errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">
+                {{ form.email.label }}
+                <div class="tooltip-wrapper">
+                    <span class="tooltip-icon">!</span>
+                    <span class="tooltip-text">
+                        - Корректный email-адрес<br>
+                        - Формат: example@domain.com<br>
+                        - Домен должен существовать
+                    </span>
+                </div>
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="text-danger small">
+                {% for error in form.email.errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">
+                {{ form.password.label }}
+                <div class="tooltip-wrapper">
+                    <span class="tooltip-icon">!</span>
+                    <span class="tooltip-text">
+                        - Минимум 8 символов<br>
+                        - Хотя бы одна цифра<br>
+                        - Хотя бы одна буква
+                    </span>
+                </div>
+            </label>
+            {{ form.password }}
+            {% if form.password.errors %}
+            <div class="text-danger small">
+                {% for error in form.password.errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.confirm_password.id_for_label }}">
+                {{ form.confirm_password.label }}
+            </label>
+            {{ form.confirm_password }}
+            {% if form.confirm_password.errors %}
+            <div class="text-danger small">
+                {% for error in form.confirm_password.errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+
+        <div class="link-back mt-3">
+            <a href="{% url 'accounts:login' %}">Войти</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Валидация username (остаётся без изменений)
+    document.addEventListener('DOMContentLoaded', function() {
+        const usernameInput = document.querySelector('input[name="username"]');
+        const errorSpan = document.getElementById('username-error') ||
+        document.createElement('span');
+
+        if (!document.getElementById('username-error')) {
+            errorSpan.id = 'username-error';
+            errorSpan.style.cssText = 'color: red; font-size: 0.875em; display: block; margin-top: 5px;';
+            usernameInput.parentNode.appendChild(errorSpan);
+        }
+
+        usernameInput.addEventListener('input', function() {
+            const value = this.value.trim();
+            let error = '';
+            if (!value) {
+                error = 'Это поле обязательно для заполнения.';
+            } else if (!/^[a-zA-Z]/.test(value)) {
+                error = 'Логин должен начинаться с буквы.';
+            } else if (!/^[a-zA-Z0-9@$_!#]*$/.test(value)) {
+                error = 'Разрешены только: латинские буквы, цифры и символы @$_!#';
+            } else if (!/[a-zA-Z]/.test(value)) {
+                error = 'Логин должен содержать хотя бы одну латинскую букву.';
+            } else if (/\s/.test(value)) {
+                error = 'Пробелы и табуляция запрещены.';
+            } else if (['none', 'null'].includes(value.toLowerCase())) {
+                error = 'Недопустимое значение для логина.';
+            }
+            errorSpan.textContent = error;
+        });
+    });
+</script>
+{% endblock %}

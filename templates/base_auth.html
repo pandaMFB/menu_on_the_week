@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Авторизация{% endblock %}</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden; /* Ключевое дополнение */
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: -1%;      /* Сдвиг за границы */
+      left: -1%;     /* Сдвиг за границы */
+      width: 102%;   /* Покрытие всего экрана */
+      height: 102%;  /* Покрытие всего экрана */
+      background-image: url("/static/img/food-background.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(4px) brightness(0.7);
+      -webkit-filter: blur(4px) brightness(0.7);
+      z-index: -1;
+      transform: translateZ(0); /* Улучшает рендеринг */
+    }
+  </style>
+
+  {% block styles %}{% endblock %}
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

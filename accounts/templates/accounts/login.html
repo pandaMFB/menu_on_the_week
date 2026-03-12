@@ -1,0 +1,38 @@
+{% extends "base_auth.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Вход в аккаунт{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-form-container">
+    <h1>Добро пожаловать</h1>
+    <p>Войдите в свой аккаунт</p>
+
+
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Логин</label>
+            {{ form.username|add_class:'form-input' }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Пароль</label>
+            {{ form.password|add_class:'form-input' }}
+        </div>
+
+        <button type="submit" class="btn-login">Войти</button>
+
+        <div class="auth-links">
+            <a href="{% url 'accounts:password_reset' %}">Восстановление пароля</a>
+            <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Планер питания{% endblock %}
+
+{% block content %}
+
+<!-- Вывод сообщений (только актуальные) -->
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Шапка с навигацией -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'meal_planner:index' %}">
+            Планер питания
+        </a>
+
+        {% if user.is_authenticated %}
+        <div class="navbar-text text-white me-3">
+            Добро пожаловать, {{ user.username }}!
+        </div>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger btn-sm">
+            Выйти
+        </a>
+        {% else %}
+        <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-sm">
+            Войти
+        </a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- Основной контент -->
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Планер питания</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'meal_planner:menu' %}" class="card text-white bg-primary text-center h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Меню на неделю</h5>
+                    <p class="card-text">Планируйте блюда по дням</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'meal_planner:recipes' %}" class="card text-white bg-success text-center h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Рецепты</h5>
+                    <p class="card-text">Храните свои рецепты</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'meal_planner:shopping_list' %}" class="card text-white bg-warning text-center h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Список покупок</h5>
+                    <p class="card-text">Управляйте списком продуктов</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

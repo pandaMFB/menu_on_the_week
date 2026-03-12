@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Меню на неделю{% endblock %}</title>
+
+    <!-- Подключаем Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css! rel="stylesheet">
+
+    <!-- Блок для подключения кастомных стилей -->
+    {% block styles %}
+    <!-- Здесь будут подключаться стили из дочерних шаблонов -->
+    {% endblock %}
+</head>
+<body>
+<header class="bg-primary text-white p-3">
+    <h1>Меню на неделю</h1>
+</header>
+
+<main class="container mt-4">
+    {% block content %}
+    <!-- Содержимое страниц будет вставляться сюда -->
+    {% endblock %}
+</main>
+
+<footer class="bg-light text-muted p-3 mt-5">
+    &copy; 2025
+</footer>
+</body>
+</html>
