@@ -1,7 +1,9 @@
 {% extends "base_register.html" %}
 {% load static %}
 
-{% block styles %}
+{% block title %}Регистрация{% endblock %}
+
+{% block extra_styles %}
 <link rel="stylesheet" href="{% static 'css/register.css' %}">
 {% endblock %}
 
@@ -12,14 +14,15 @@
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'danger' }}">
+        <div class="alert alert-{{ message.tags|default:'danger' }} alert-dismissible fade show">
             {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
-    <form method="post" id="register-form">
+    <form method="post" id="register-form" novalidate>
         {% csrf_token %}
 
         <div class="form-group">
@@ -40,7 +43,9 @@
             {{ form.username }}
             {% if form.username.errors %}
             <div class="text-danger small">
-                {% for error in form.username.errors %}{{ error }}{% endfor %}
+                {% for error in form.username.errors %}
+                {{ error }}{% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
             </div>
             {% endif %}
         </div>
@@ -60,7 +65,9 @@
             {{ form.email }}
             {% if form.email.errors %}
             <div class="text-danger small">
-                {% for error in form.email.errors %}{{ error }}{% endfor %}
+                {% for error in form.email.errors %}
+                {{ error }}{% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
             </div>
             {% endif %}
         </div>
@@ -80,7 +87,9 @@
             {{ form.password }}
             {% if form.password.errors %}
             <div class="text-danger small">
-                {% for error in form.password.errors %}{{ error }}{% endfor %}
+                {% for error in form.password.errors %}
+                {{ error }}{% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
             </div>
             {% endif %}
         </div>
@@ -92,7 +101,9 @@
             {{ form.confirm_password }}
             {% if form.confirm_password.errors %}
             <div class="text-danger small">
-                {% for error in form.confirm_password.errors %}{{ error }}{% endfor %}
+                {% for error in form.confirm_password.errors %}
+                {{ error }}{% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
             </div>
             {% endif %}
         </div>
@@ -139,5 +150,16 @@
             errorSpan.textContent = error;
         });
     });
+
+    // Автоматическое скрытие сообщений через 5 секунд
+    setTimeout(function() {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            let closeButton = alert.querySelector('.btn-close');
+            if (closeButton) {
+                closeButton.click();
+            }
+        });
+    }, 5000);
 </script>
 {% endblock %}

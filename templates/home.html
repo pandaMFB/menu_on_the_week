@@ -1,38 +1,60 @@
-{% extends "base.html" %}
+{% extends "base_auth.html" %}
+{% load static %}
 
 {% block title %}Вход на сайт{% endblock %}
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>Вход в систему</h3>
-                </div>
-                <div class="card-body">
-                    {% if messages %}
-                    {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}  <!-- Простое отображение всех полей -->
-                        <button type="submit" class="btn btn-primary w-100">Войти</button>
-                    </form>
+{% block auth_content %}
+<div class="home-page">
+    <div class="form-card">
+        <h1 class="title">Добро пожаловать!</h1>
+        <p class="subtitle">
+            Планируйте питание и следите за здоровьем вместе с нашим сервисом.
+        </p>
 
-                    <hr>
-                    <div class="text-center">
-                        <a href="{% url 'accounts:register' %}" class="btn btn-outline-secondary">Зарегистрироваться</a>
-                    </div>
-                </div>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="cta-buttons">
+            <a href="{% url 'accounts:login' %}" class="btn btn-login">Войти в аккаунт</a>
+            <a href="{% url 'accounts:register' %}" class="btn btn-register">Зарегистрироваться</a>
+        </div>
+
+        <div class="features">
+            <h3 class="features-title">Что вы получите:</h3>
+            <ul class="features-list">
+                <li>Планирование меню на неделю</li>
+                <li>Собственная библиотека рецептов</li>
+                <li>Автоматический список покупок</li>
+                <li>Учёт продуктов и порций</li>
+            </ul>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Автоматическое скрытие сообщений через 5 секунд
+    setTimeout(function() {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            let closeButton = alert.querySelector('.btn-close');
+            if (closeButton) {
+                closeButton.click();
+            }
+        });
+    }, 5000);
+</script>
 {% endblock %}

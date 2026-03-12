@@ -10,32 +10,38 @@
 
 /* Карточка с контентом */
 .form-card {
-    background: rgba(30, 30, 30, 0.9);
+    background: rgba(30, 30, 30, 0.92);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* Для Safari */
-    border-radius: 20px;
-    padding: 40px 50px;
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 28px;
+    padding: 2rem 2.5rem;
     max-width: 600px;
     width: 100%;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-5px);
 }
 
 /* Заголовок */
 .title {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     color: #ffffff;
-    margin-bottom: 15px;
+    margin-bottom: 0.75rem;
     text-align: center;
     font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 /* Подзаголовок */
 .subtitle {
-    color: #e0e0e0;
-    font-size: 1.1rem;
+    color: #d0d0d0;
+    font-size: 1rem;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
     line-height: 1.5;
 }
 
@@ -43,25 +49,26 @@
 .cta-buttons {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    margin: 30px 0;
+    gap: 1rem;
+    margin: 2rem 0;
 }
 
 .btn {
     display: block;
     text-align: center;
     text-decoration: none;
-    border-radius: 12px;
-    padding: 16px 24px;
-    font-size: 1.1rem;
+    border-radius: 14px;
+    padding: 14px 24px;
+    font-size: 1rem;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     border: none;
     outline: none;
+    cursor: pointer;
 }
 
 .btn-login {
-    background-color: #bb86fc;
+    background: linear-gradient(135deg, #bb86fc 0%, #9c66e5 100%);
     color: #000000;
 }
 
@@ -72,9 +79,9 @@
 }
 
 .btn-login:hover {
-    background-color: #9c66e5;
+    background: linear-gradient(135deg, #c89aff 0%, #b077ff 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(156, 102, 229, 0.3);
+    box-shadow: 0 8px 20px rgba(156, 102, 229, 0.4);
 }
 
 .btn-register:hover {
@@ -83,18 +90,22 @@
     box-shadow: 0 6px 16px rgba(187, 134, 252, 0.2);
 }
 
+.btn:active {
+    transform: translateY(0);
+}
+
 /* Блок преимуществ */
 .features {
-    margin-top: 35px;
-    padding-top: 25px;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .features-title {
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
     text-align: left;
 }
 
@@ -105,10 +116,10 @@
 }
 
 .features-list li {
-    padding: 12px 0;
+    padding: 0.75rem 0;
     color: #e0e0e0;
     position: relative;
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.4;
 }
 
@@ -125,8 +136,8 @@
 /* Адаптивность */
 @media (max-width: 768px) {
     .form-card {
-        padding: 30px 30px;
-        margin: 15px;
+        padding: 1.5rem;
+        margin: 1rem;
     }
 
     .title {
@@ -134,33 +145,33 @@
     }
 
     .subtitle {
-        font-size: 1rem;
-        margin-bottom: 25px;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
     }
 
     .cta-buttons {
-        gap: 14px;
+        gap: 0.8rem;
+        margin: 1.5rem 0;
     }
 
     .btn {
-        font-size: 1rem;
-        padding: 14px 20px;
+        font-size: 0.95rem;
+        padding: 12px 20px;
     }
 
     .features-title {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
     }
 
     .features-list li {
-        font-size: 0.95rem;
-        padding: 10px 0;
+        font-size: 0.9rem;
+        padding: 0.6rem 0;
     }
 }
 
 @media (max-width: 480px) {
     .form-card {
-        padding: 25px 20px;
-        border-radius: 16px;
+        padding: 1.25rem;
     }
 
     .title {
@@ -168,16 +179,12 @@
     }
 
     .btn {
-        font-size: 0.95rem;
-        padding: 12px 16px;
-    }
-
-    .features-title {
-        font-size: 1.05rem;
+        font-size: 0.9rem;
+        padding: 10px 16px;
     }
 
     .features-list li {
-        font-size: 0.9rem;
-        padding: 8px 0;
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
     }
 }

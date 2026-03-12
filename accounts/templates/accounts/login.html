@@ -4,7 +4,7 @@
 
 {% block title %}Вход в аккаунт{% endblock %}
 
-{% block styles %}
+{% block extra_styles %}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock %}
 
@@ -13,18 +13,31 @@
     <h1>Добро пожаловать</h1>
     <p>Войдите в свой аккаунт</p>
 
-
-    <form method="post" class="auth-form">
+    <form method="post" class="auth-form" novalidate>
         {% csrf_token %}
 
         <div class="form-group">
             <label for="{{ form.username.id_for_label }}">Логин</label>
             {{ form.username|add_class:'form-input' }}
+            {% if form.username.errors %}
+            <div class="text-danger small mt-1">
+                {% for error in form.username.errors %}
+                {{ error }}{% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="form-group">
             <label for="{{ form.password.id_for_label }}">Пароль</label>
             {{ form.password|add_class:'form-input' }}
+            {% if form.password.errors %}
+            <div class="text-danger small mt-1">
+                {% for error in form.password.errors %}
+                {{ error }}{% if not forloop.last %}<br>{% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <button type="submit" class="btn-login">Войти</button>
@@ -35,4 +48,18 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    setTimeout(function() {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            let closeButton = alert.querySelector('.btn-close');
+            if (closeButton) {
+                closeButton.click();
+            }
+        });
+    }, 5000);
+</script>
 {% endblock %}

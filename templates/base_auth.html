@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Авторизация{% endblock %}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -16,6 +19,7 @@
       width: 100%;
       overflow: hidden;
       position: relative;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
@@ -44,8 +48,14 @@
   </style>
 
   {% block styles %}{% endblock %}
+  {% block extra_styles %}{% endblock %}
 </head>
 <body>
 {% block content %}{% endblock %}
+
+<!-- Bootstrap JS (если понадобится) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block scripts %}{% endblock %}
 </body>
 </html>

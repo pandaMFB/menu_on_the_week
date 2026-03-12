@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
 {% load extras %}
 
 {% block title %}Меню на неделю{% endblock %}
@@ -12,23 +11,23 @@
     <div class="day-card">
         <h3>{{ days|get_item:day_num|default:"Неизвестный день" }}</h3>
         {% if meals %}
-        <ul>
+        <ul class="list-unstyled">
             {% for meal in meals %}
-            <li>
+            <li class="mb-2">
                 <strong>{{ meal.name }}</strong>
-                <p>{{ meal.description }}</p>
+                <p class="mb-0">{{ meal.description }}</p>
             </li>
             {% endfor %}
         </ul>
         {% else %}
-        <p>Нет блюд на этот день.</p>
+        <p class="text-muted">Нет блюд на этот день.</p>
         {% endif %}
     </div>
     {% endfor %}
 </div>
 
-<p>
-    <a href="{% url 'meal_planner:add_meal' %}" class="btn btn-primary">Добавить блюдо</a>
-    <a href="{% url 'meal_planner:shopping_list' %}" class="btn btn-outline-secondary">Список покупок</a>
-</p>
+<div class="mt-4">
+    <a href="{% url 'meal_planner:add_meal' %}" class="btn btn-primary" aria-label="Добавить новое блюдо">Добавить блюдо</a>
+    <a href="{% url 'meal_planner:shopping_list' %}" class="btn btn-outline-secondary ms-2" aria-label="Перейти к списку покупок">Список покупок</a>
+</div>
 {% endblock %}
