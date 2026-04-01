@@ -118,6 +118,13 @@ input:focus {
     text-decoration: underline;
 }
 
+input.is-invalid,
+input.is-invalid:focus {
+    border-color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
 /* Анимация появления */
 @keyframes fadeInUp {
     from {

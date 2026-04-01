@@ -1,4 +1,4 @@
-{% extends "base_register.html" %}
+{% extends "base_auth.html" %}
 {% load static %}
 
 {% block title %}Регистрация{% endblock %}
@@ -12,12 +12,19 @@
     <h2>Регистрация</h2>
 
     {% if messages %}
-    <div class="messages">
+    <div class="messages" style="margin-bottom: 1.5rem;">
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'danger' }} alert-dismissible fade show">
+        <div class="alert alert-{{ message.tags|default:'danger' }} text-center" role="alert">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger text-center" style="margin-bottom: 1.5rem;">
+        {% for error in form.non_field_errors %}
+        {{ error }}
         {% endfor %}
     </div>
     {% endif %}
@@ -40,14 +47,9 @@
                     </span>
                 </div>
             </label>
-            {{ form.username }}
-            {% if form.username.errors %}
-            <div class="text-danger small">
-                {% for error in form.username.errors %}
-                {{ error }}{% if not forloop.last %}<br>{% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+            <input type="text" name="username" id="{{ form.username.id_for_label }}"
+                   class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                   value="{{ form.username.value|default:'' }}">
         </div>
 
         <div class="form-group">
@@ -62,14 +64,9 @@
                     </span>
                 </div>
             </label>
-            {{ form.email }}
-            {% if form.email.errors %}
-            <div class="text-danger small">
-                {% for error in form.email.errors %}
-                {{ error }}{% if not forloop.last %}<br>{% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+            <input type="email" name="email" id="{{ form.email.id_for_label }}"
+                   class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                   value="{{ form.email.value|default:'' }}">
         </div>
 
         <div class="form-group">
@@ -84,28 +81,16 @@
                     </span>
                 </div>
             </label>
-            {{ form.password }}
-            {% if form.password.errors %}
-            <div class="text-danger small">
-                {% for error in form.password.errors %}
-                {{ error }}{% if not forloop.last %}<br>{% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+            <input type="password" name="password" id="{{ form.password.id_for_label }}"
+                   class="form-control {% if form.password.errors %}is-invalid{% endif %}">
         </div>
 
         <div class="form-group">
             <label for="{{ form.confirm_password.id_for_label }}">
                 {{ form.confirm_password.label }}
             </label>
-            {{ form.confirm_password }}
-            {% if form.confirm_password.errors %}
-            <div class="text-danger small">
-                {% for error in form.confirm_password.errors %}
-                {{ error }}{% if not forloop.last %}<br>{% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+            <input type="password" name="confirm_password" id="{{ form.confirm_password.id_for_label }}"
+                   class="form-control {% if form.confirm_password.errors %}is-invalid{% endif %}">
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
@@ -118,48 +103,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-    // Валидация username (остаётся без изменений)
-    document.addEventListener('DOMContentLoaded', function() {
-        const usernameInput = document.querySelector('input[name="username"]');
-        const errorSpan = document.getElementById('username-error') ||
-        document.createElement('span');
-
-        if (!document.getElementById('username-error')) {
-            errorSpan.id = 'username-error';
-            errorSpan.style.cssText = 'color: red; font-size: 0.875em; display: block; margin-top: 5px;';
-            usernameInput.parentNode.appendChild(errorSpan);
-        }
-
-        usernameInput.addEventListener('input', function() {
-            const value = this.value.trim();
-            let error = '';
-            if (!value) {
-                error = 'Это поле обязательно для заполнения.';
-            } else if (!/^[a-zA-Z]/.test(value)) {
-                error = 'Логин должен начинаться с буквы.';
-            } else if (!/^[a-zA-Z0-9@$_!#]*$/.test(value)) {
-                error = 'Разрешены только: латинские буквы, цифры и символы @$_!#';
-            } else if (!/[a-zA-Z]/.test(value)) {
-                error = 'Логин должен содержать хотя бы одну латинскую букву.';
-            } else if (/\s/.test(value)) {
-                error = 'Пробелы и табуляция запрещены.';
-            } else if (['none', 'null'].includes(value.toLowerCase())) {
-                error = 'Недопустимое значение для логина.';
-            }
-            errorSpan.textContent = error;
-        });
-    });
-
-    // Автоматическое скрытие сообщений через 5 секунд
-    setTimeout(function() {
-        let alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function(alert) {
-            let closeButton = alert.querySelector('.btn-close');
-            if (closeButton) {
-                closeButton.click();
-            }
-        });
-    }, 5000);
-</script>
+{{ block.super }}
 {% endblock %}

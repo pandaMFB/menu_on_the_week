@@ -111,7 +111,9 @@ class RegisterForm(forms.ModelForm):
         return username
 
     def clean_email(self):
-        email = self.cleaned_data['email']
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise ValidationError('Это поле обязательно для заполнения.')
         if User.objects.filter(email__iexact=email).exists():
             raise ValidationError('Пользователь с таким email уже существует.')
         return email

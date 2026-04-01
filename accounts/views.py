@@ -50,7 +50,7 @@ def register_view(request):
             for field, err_list in form.errors.items():
                 for err in err_list:
                     errors.append(str(err))
-            messages.error(request, "Ошибка регистрации: " + "; ".join(errors))
+            messages.error(request, "Ошибка регистрации!")
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})

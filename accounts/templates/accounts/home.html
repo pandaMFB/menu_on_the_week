@@ -12,7 +12,7 @@
   <div class="form-card">
     <h1 class="title">Добро пожаловать!</h1>
     <p class="subtitle">
-      Планируйте питание и следите за здоровьем вместе с нашим сервисом.
+      Меню на неделю, рецепты и список покупок
     </p>
 
     {% if messages %}
@@ -30,31 +30,10 @@
       <a href="{% url 'accounts:login' %}" class="btn btn-login">Войти в аккаунт</a>
       <a href="{% url 'accounts:register' %}" class="btn btn-register">Зарегистрироваться</a>
     </div>
-
-    <div class="features">
-      <h3 class="features-title">Что вы получите:</h3>
-      <ul class="features-list">
-        <li>Планирование меню на неделю</li>
-        <li>Собственная библиотека рецептов</li>
-        <li>Автоматический список покупок</li>
-        <li>Учёт продуктов и порций</li>
-      </ul>
-    </div>
   </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script>
-  // Автоматическое скрытие сообщений через 5 секунд
-  setTimeout(function() {
-    let alerts = document.querySelectorAll('.alert');
-    alerts.forEach(function(alert) {
-      let closeButton = alert.querySelector('.btn-close');
-      if (closeButton) {
-        closeButton.click();
-      }
-    });
-  }, 5000);
-</script>
+{{ block.super }}
 {% endblock %}
