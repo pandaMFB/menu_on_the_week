@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Рецепты{% endblock %}
 
@@ -6,23 +7,31 @@
 <h1>Мои рецепты</h1>
 
 {% if recipes %}
-<ul class="list-group">
-  {% for recipe in recipes %}
-  <li class="list-group-item">
+{% for recipe in recipes %}
+<div class="card mb-3">
+  <div class="card-header">
     <strong>{{ recipe.name }}</strong>
-    <p class="text-muted mb-0">Для блюда: {{ recipe.meal.name }}</p>
-  </li>
-  {% endfor %}
-</ul>
+  </div>
+  <div class="card-body">
+    <h6>Ингредиенты:</h6>
+    {% if recipe.ingredients.all %}
+    <ul class="list-group list-group-flush">
+      {% for ingredient in recipe.ingredients.all %}
+      <li class="list-group-item">{{ ingredient.name }} — {{ ingredient.quantity }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted">Ингредиенты не добавлены.</p>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
 {% else %}
-<p>У вас пока нет рецептов. Добавьте блюда в меню, чтобы начать.</p>
+<p>У вас пока нет рецептов. Создайте первый рецепт!</p>
 {% endif %}
 
-<p class="mt-3">
+<div class="mt-3">
+  <a href="{% url 'meal_planner:add_recipe' %}" class="btn btn-primary">Добавить рецепт</a>
   <a href="{% url 'meal_planner:index' %}" class="btn btn-secondary">Назад на главную</a>
-</p>
-{% endblock %}
-
-{% block scripts %}
-<!-- Место для будущих скриптов, если понадобятся -->
+</div>
 {% endblock %}

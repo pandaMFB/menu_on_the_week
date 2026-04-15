@@ -4,24 +4,35 @@
 {% block title %}Меню на неделю{% endblock %}
 
 {% block content %}
-<h1>Меню на неделю</h1>
+<h1 class="mb-4">Меню на неделю</h1>
 
-<div class="week-grid">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     {% for day_num, meals in weekly_meals.items %}
-    <div class="day-card">
-        <h3>{{ days|get_item:day_num|default:"Неизвестный день" }}</h3>
-        {% if meals %}
-        <ul class="list-unstyled">
-            {% for meal in meals %}
-            <li class="mb-2">
-                <strong>{{ meal.name }}</strong>
-                <p class="mb-0">{{ meal.description }}</p>
-            </li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p class="text-muted">Нет блюд на этот день.</p>
-        {% endif %}
+    <div class="col">
+        <div class="card h-100 day-card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="h5 mb-0">{{ days|get_item:day_num|default:"Неизвестный день" }}</h3>
+            </div>
+            <div class="card-body">
+                {% if meals %}
+                <ul class="list-unstyled mb-0">
+                    {% for meal in meals %}
+                    <li class="mb-3 pb-2 border-bottom">
+                        <strong>{{ meal.name }}</strong>
+                        {% if meal.recipe %}
+                        <span class="badge bg-info text-dark ms-2">по рецепту: {{ meal.recipe.name }}</span>
+                        {% endif %}
+                        {% if meal.description %}
+                        <p class="text-muted small mb-0 mt-1">{{ meal.description }}</p>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted mb-0">Нет блюд на этот день.</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
     {% endfor %}
 </div>
